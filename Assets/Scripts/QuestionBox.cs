@@ -2,16 +2,16 @@ using UnityEngine;
 
 public class QuestionBox : MonoBehaviour
 {
-    public Animator boxAnimator;       // Animator with Idle (blink), Bounce, Disabled states
-    public Sprite usedSprite;          // Sprite for the disabled box
-    public GameObject coinPrefab;      // Coin prefab
-    public AudioClip coinSound;        // Coin sound
+    public Animator boxAnimator;      
+    public Sprite usedSprite;        
+    public GameObject coinPrefab;   
+    public AudioClip coinSound;        
 
     private bool used = false;
     private SpriteRenderer sr;
 
-    public float bounceHeight = 0.2f;   // how high the box moves
-    public float bounceSpeed = 5f;      // how fast the bounce is
+    public float bounceHeight = 0.2f;   
+    public float bounceSpeed = 5f;      
 
     private Vector3 originalPos;
 

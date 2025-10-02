@@ -17,11 +17,11 @@ public class Coin : MonoBehaviour
         if (coinSound != null)
         {
             AudioSource.PlayClipAtPoint(coinSound, transform.position);
-            Debug.Log("[Coin] Played coin sound.");
+            // Debug.Log("[Coin] Played coin sound.");
         }
         else
         {
-            Debug.LogWarning("[Coin] No coinSound assigned!");
+            // Debug.LogWarning("[Coin] No coinSound assigned!");
         }
     }
 
