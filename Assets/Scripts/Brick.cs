@@ -5,7 +5,6 @@ public class Brick : MonoBehaviour
     [Header("Brick Settings")]
     public bool hasCoin = false;          // true = spawns coin, false = just bounce
     public GameObject coinPrefab;         // coin prefab reference
-    public AudioClip coinSound;           // sound when coin is collected
 
     [Header("Bounce Settings")]
     public float bounceHeight = 0.2f;     // how high the brick moves
@@ -54,10 +53,6 @@ public class Brick : MonoBehaviour
             GameObject coin = Instantiate(coinPrefab, spawnPos, Quaternion.identity);
             Debug.Log("Coin spawned at: " + spawnPos);
 
-
-            // Play sound effect
-            if (coinSound != null)
-                AudioSource.PlayClipAtPoint(coinSound, transform.position);
         }
     }
 

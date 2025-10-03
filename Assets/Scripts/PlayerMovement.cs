@@ -5,55 +5,38 @@ using TMPro;
 using Unity.VisualScripting;
 
 public class PlayerMovement : MonoBehaviour
-{
+// MonoBehaviour lets the script be attached to a GameObject
+// It’s a special Unity base class that gives you access to Unity’s event methods: 
+// Start(), Update(), FixedUpdate(), OnCollisionEnter2D(), etc.
+{   
+    // Movement parameters
     public float speed = 40;
     public float maxSpeed = 50;
     public float upSpeed = 20;
+
+    // State Tracking
     private bool onGroundState = true;
-    private SpriteRenderer marioSprite;
     private bool faceRightState = true;
-    public Transform gameCamera;
+    [System.NonSerialized] // do not show in inspector
+    public bool alive = true;
 
-    public GameObject gameOverCanvas;
-    public TextMeshProUGUI finalScoreText;
-
+    // Components
+    private Rigidbody2D marioBody;
+    private SpriteRenderer marioSprite;
     public Animator marioAnimator;
     public AudioSource marioAudio;
 
-    void PlayJumpSound()
-    {
-        marioAudio.PlayOneShot(marioAudio.clip);
-    }
+    // UI Objects
+    public Transform gameCamera;
+    public GameObject gameOverCanvas;
+    public TextMeshProUGUI finalScoreText;
+    public TextMeshProUGUI scoreText;
+
+    // Other parameters
     public AudioClip marioDeath;
     public float deathImpulse = 15;
-
-    [System.NonSerialized]
-    public bool alive = true;
-
-    public void PlayDeathImpulse()
-    {
-        marioBody.AddForce(Vector2.up * deathImpulse, ForceMode2D.Impulse);
-    }
-
-
-    public void GameOverScene()
-    {
-        // stop time
-        Time.timeScale = 0.0f;
-        // set gameover scene
-        gameOverCanvas.SetActive(true);
-        finalScoreText.text = scoreText.text;
-    }
-
-
-    public JumpOverGoomba jumpOverGoomba;
-
-    // For restart button
-    public TextMeshProUGUI scoreText;
-    public GameObject enemies;
-
-    private Rigidbody2D marioBody;
-
+    public GameObject enemies; // to reset Goombas
+    public JumpOverGoomba jumpOverGoomba; // to reset score
 
 
     // Start is called before the first frame update
@@ -68,8 +51,7 @@ public class PlayerMovement : MonoBehaviour
     }
 
     // Update is called once per frame
-
-    void Update()
+     void Update()
     {
         // toggle state
         if (Input.GetKeyDown("a") && faceRightState)
@@ -91,6 +73,29 @@ public class PlayerMovement : MonoBehaviour
         marioAnimator.SetFloat("xSpeed", Mathf.Abs(marioBody.linearVelocity.x));
     }
 
+    // Functions
+    void PlayJumpSound()
+    {
+        marioAudio.PlayOneShot(marioAudio.clip);
+    }
+
+    public void PlayDeathImpulse()
+    {
+        marioBody.AddForce(Vector2.up * deathImpulse, ForceMode2D.Impulse);
+    }
+
+
+    public void GameOverScene()
+    {
+        // stop time
+        Time.timeScale = 0.0f;
+        // set gameover scene
+        gameOverCanvas.SetActive(true);
+        finalScoreText.text = scoreText.text;
+    }
+
+
+    // Triggeres when Mario collides with another object
     void OnCollisionEnter2D(Collision2D col)
     {
 
@@ -118,7 +123,7 @@ public class PlayerMovement : MonoBehaviour
 
 
 
-    // FixedUpdate may be called once per frame. See documentation for details.
+    // FixedUpdate may be called once per frame.
     void FixedUpdate()
     {
         float moveHorizontal = Input.GetAxisRaw("Horizontal");
@@ -161,6 +166,7 @@ public class PlayerMovement : MonoBehaviour
     {
         // reset position
         // transform.position = new Vector3(-3.259f, -2.45551f, -0.03384f);
+        // hardcoded position for Mario
         marioBody.transform.position = new Vector3(-3.259f, -2.45551f, -0.03384f);
         // reset sprite direction
         faceRightState = true;

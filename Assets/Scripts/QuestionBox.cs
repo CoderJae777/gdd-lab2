@@ -5,7 +5,6 @@ public class QuestionBox : MonoBehaviour
     public Animator boxAnimator;      
     public Sprite usedSprite;        
     public GameObject coinPrefab;   
-    public AudioClip coinSound;        
 
     private bool used = false;
     private SpriteRenderer sr;
@@ -103,9 +102,6 @@ public class QuestionBox : MonoBehaviour
         // Change sprite to used
         if (sr != null && usedSprite != null)
             sr.sprite = usedSprite;
-        // Play sound
-        if (coinSound != null)
-            AudioSource.PlayClipAtPoint(coinSound, transform.position);
 
         // Spawn coin
         if (coinPrefab != null)
