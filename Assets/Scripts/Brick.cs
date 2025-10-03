@@ -1,21 +1,23 @@
 using UnityEngine;
 
 public class Brick : MonoBehaviour
-{
-    [Header("Brick Settings")]
-    public bool hasCoin = false;          // true = spawns coin, false = just bounce
-    public GameObject coinPrefab;         // coin prefab reference
+{   
+    [Header("Brick Settings")]      // For the inspector to show "Brick Settings", just some qol stuff
+    public bool hasCoin = false;    // true = spawns coin, false = just bounce
+    public GameObject coinPrefab;   // coin prefab reference
 
-    [Header("Bounce Settings")]
-    public float bounceHeight = 0.2f;     // how high the brick moves
-    public float bounceSpeed = 5f;        // how fast the bounce happens
+    // Bounce Settings
+    [Header("Bounce Settings")]         // same qol stuff
+    public float bounceHeight = 0.2f;   // how high the brick moves
+    public float bounceSpeed = 5f;      // how fast the bounce happens
 
-    private Vector3 originalPos;
-    private bool used = false;            // brick state (used or not)
+    
+    private Vector3 originalPos;    // original local position of the brick
+    private bool used = false;      // brick state (used or not)
 
     private void Start()
-    {
-        originalPos = transform.localPosition;
+    {   
+        originalPos = transform.localPosition;  //localPosition is measured relative to that parent, not world space.
     }
 
     private void OnCollisionEnter2D(Collision2D col)
@@ -44,7 +46,12 @@ public class Brick : MonoBehaviour
 
         // Start bounce animation (script-driven)
         StopAllCoroutines();
-        StartCoroutine(BounceRoutine());
+        StartCoroutine(BounceRoutine());    // Begins the coroutine
+
+        // Why is this better than a normal function call?
+        // bcause unity would try to execute all iterations in one frame i.e. the brick will teleport up
+        // and then down again in one frame. 
+        // Coroutine allows pausing execution and resuming in the next frame.
 
         // If it has a coin, spawn it
         if (hasCoin && coinPrefab != null)

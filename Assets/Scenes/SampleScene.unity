@@ -3307,6 +3307,7 @@ GameObject:
   - component: {fileID: 1636090456}
   - component: {fileID: 1636090457}
   - component: {fileID: 1636090458}
+  - component: {fileID: 1636090459}
   m_Layer: 0
   m_Name: Mario
   m_TagString: Player
@@ -3472,16 +3473,17 @@ MonoBehaviour:
   speed: 40
   maxSpeed: 50
   upSpeed: 20
+  marioAnimator: {fileID: 1636090457}
+  marioAudio: {fileID: 1636090458}
   gameCamera: {fileID: 519420032}
   gameOverCanvas: {fileID: 1929035188}
   finalScoreText: {fileID: 1166761514}
-  marioAnimator: {fileID: 1636090457}
-  marioAudio: {fileID: 1636090458}
+  scoreText: {fileID: 179345849}
   marioDeath: {fileID: 8300000, guid: fa8f1eb76f7929046a912334be2418a1, type: 3}
   deathImpulse: 45
-  jumpOverGoomba: {fileID: 1636090456}
-  scoreText: {fileID: 179345849}
   enemies: {fileID: 207363526}
+  jumpOverGoomba: {fileID: 1636090456}
+  playerInput: {fileID: 0}
 --- !u!114 &1636090456
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3620,6 +3622,96 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1636090459
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1636090449}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: 5a7aa6b3e4968df40a8fec6b780bb55a, type: 3}
+  m_NotificationBehavior: 0
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11500000, guid: f6b0fd501e896fa4aa24cdf54e59dc88, type: 3}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: de540d4e-759e-490b-a3d7-a0dc5c65b28a
+    m_ActionName: 'gameplay/move[/Keyboard/a,/Keyboard/d]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11500000, guid: f6b0fd501e896fa4aa24cdf54e59dc88, type: 3}
+        m_TargetAssemblyTypeName: UnityEditor.MonoScript, UnityEditor.CoreModule
+        m_MethodName: set_name
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 73e00322-b341-4139-ae01-5b40665da090
+    m_ActionName: 'gameplay/jump[/Keyboard/space]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11500000, guid: f6b0fd501e896fa4aa24cdf54e59dc88, type: 3}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: ab453683-a1dd-4831-8af9-67a7b397754d
+    m_ActionName: 'gameplay/jumphold[/Keyboard/space]'
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: Keyboard
+  m_DefaultActionMap: gameplay
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
 --- !u!1 &1682423431
 GameObject:
   m_ObjectHideFlags: 0

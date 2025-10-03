@@ -1,11 +1,13 @@
 using UnityEngine;
 
 public class Coin : MonoBehaviour
-{
+{   
+    // Coin Settings
     public float riseHeight = 2f;
     public float speed = 4f;
     public AudioClip coinSound;
 
+    // Coin State
     private Vector3 startPos;
     private bool rising = true;
 
