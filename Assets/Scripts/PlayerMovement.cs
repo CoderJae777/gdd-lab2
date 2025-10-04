@@ -210,6 +210,32 @@ public class PlayerMovement : MonoBehaviour
     // }
 
     // Triggeres when Mario collides with another object
+    // void OnCollisionEnter2D(Collision2D col)
+    // {
+    //     if (
+    //         (col.gameObject.CompareTag("Ground") || col.gameObject.CompareTag("Obstacles"))
+    //         && !onGroundState
+    //     )
+    //     {
+    //         onGroundState = true;
+    //         // update animator state
+    //         marioAnimator.SetBool("onGround", onGroundState);
+    //     }
+
+    //     if (col.gameObject.CompareTag("Enemy") && alive)
+    //     {
+    //         // Debug.Log("Player collided with enemy!");
+
+    //         marioAnimator.Play("mario-die");
+    //         marioDeathAudio.Play();
+    //         alive = false;
+
+    //         // Time.timeScale = 0.0f;
+    //         // gameOverCanvas.SetActive(true);
+    //         // finalScoreText.text = scoreText.text;
+    //     }
+    // }
+
     void OnCollisionEnter2D(Collision2D col)
     {
         if (
@@ -221,18 +247,30 @@ public class PlayerMovement : MonoBehaviour
             // update animator state
             marioAnimator.SetBool("onGround", onGroundState);
         }
-
-        if (col.gameObject.CompareTag("Enemy") && alive)
+        else if (col.gameObject.CompareTag("Enemy") && alive)
         {
-            // Debug.Log("Player collided with enemy!");
+            bool stomped = false;
 
-            marioAnimator.Play("mario-die");
-            marioDeathAudio.Play();
-            alive = false;
+            foreach (ContactPoint2D contact in col.contacts)
+            {
+                // If contact normal points upwards → Mario hit enemy from above
+                if (contact.normal.y > 0.5f)
+                {
+                    stomped = true;
+                    break;
+                }
+            }
 
-            // Time.timeScale = 0.0f;
-            // gameOverCanvas.SetActive(true);
-            // finalScoreText.text = scoreText.text;
+            if (stomped)
+            {
+                return;
+            }
+            else
+            {
+                marioAnimator.Play("mario-die");
+                marioDeathAudio.Play();
+                alive = false;
+            }
         }
     }
 

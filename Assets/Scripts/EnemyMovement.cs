@@ -19,6 +19,8 @@ public class EnemyMovement : MonoBehaviour
         enemyBody = GetComponent<Rigidbody2D>();
         // get the starting position
         originalX = transform.position.x;
+        // record the spawn/start position so GameRestart can restore it
+        startPosition = transform.localPosition;
         ComputeVelocity();
     }
 
@@ -54,6 +56,8 @@ public class EnemyMovement : MonoBehaviour
 
     public void GameRestart()
     {
+        gameObject.SetActive(true);
+
         transform.localPosition = startPosition;
         originalX = transform.position.x;
         moveRight = -1;

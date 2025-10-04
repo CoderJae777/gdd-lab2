@@ -16,6 +16,31 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         gameStart.Invoke();
+        // ensure event containers are initialized (in case not set in inspector)
+        if (scoreChange == null)
+            scoreChange = new UnityEvent<int>();
+
+        if (gameRestart == null)
+            gameRestart = new UnityEvent();
+
+        if (gameStart == null)
+            gameStart = new UnityEvent();
+
+        if (gameOver == null)
+            gameOver = new UnityEvent();
+
+        // Try to auto-wire HUD manager if present in scene
+        var hudObj = GameObject.FindAnyObjectByType<HUDManager>();
+        if (hudObj != null)
+        {
+            Debug.Log("[GameManager] HUDManager found; subscribing SetScore to scoreChange.");
+            // subscribe HUD to scoreChange event
+            scoreChange.AddListener(hudObj.SetScore);
+        }
+        else
+        {
+            Debug.Log("[GameManager] HUDManager not found during Start().");
+        }
         Time.timeScale = 1.0f;
     }
 
@@ -34,11 +59,13 @@ public class GameManager : MonoBehaviour
     public void IncreaseScore(int increment)
     {
         score += increment;
+        Debug.Log($"[GameManager] IncreaseScore called. New score={score}");
         SetScore(score);
     }
 
     public void SetScore(int score)
     {
+        Debug.Log($"[GameManager] SetScore invoking scoreChange with {score}");
         scoreChange.Invoke(score);
     }
 
