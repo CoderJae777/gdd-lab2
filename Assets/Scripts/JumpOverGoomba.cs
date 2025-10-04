@@ -94,38 +94,14 @@ public class JumpOverGoomba : MonoBehaviour
 
         // Try to find an Animator on the visual child
         Animator anim = enemy.GetComponentInChildren<Animator>();
-        float wait = 0.5f; // default fallback
         if (anim != null)
         {
-            anim.SetTrigger("Squish");
-
-            // try to infer clip length from animator controller (look for squash/die clip)
-            var controller = anim.runtimeAnimatorController;
-            if (controller != null)
-            {
-                foreach (var clip in controller.animationClips)
-                {
-                    var name = clip.name.ToLower();
-                    if (
-                        name.Contains("squash")
-                        || name.Contains("squased")
-                        || name.Contains("die")
-                        || name.Contains("death")
-                    )
-                    {
-                        wait = clip.length;
-                        break;
-                    }
-                }
-            }
-            // if no clip matched, use public fallback
-            if (wait <= 0f)
-                wait = squashDuration;
+            // use a persistent bool parameter so animation event can clear it later
+            anim.SetBool("squish", true);
         }
 
-        yield return new WaitForSeconds(wait);
-
-        // Deactivate (or destroy) the enemy after animation
-        enemy.SetActive(false);
+        // Do not deactivate here; the squashed animation should call an Animation Event
+        // (OnSquashFinished) on the visual which will clear the flag and deactivate the enemy.
+        yield break;
     }
 }

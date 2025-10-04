@@ -41,16 +41,33 @@ public class EnemyManager : MonoBehaviour
         foreach (Transform child in transform)
         {
             var em = child.GetComponent<EnemyMovement>();
+            Vector3 pos;
+            if (i < childStartPositions.Length)
+            {
+                pos = childStartPositions[i];
+            }
+            else
+            {
+                // fallback: use current localPosition as a sensible start position
+                pos = child.localPosition;
+                Debug.Log(
+                    $"[EnemyManager] No cached start position for child '{child.name}' (index {i}); using current localPosition={pos}"
+                );
+            }
+
             if (em != null)
             {
-                em.startPosition = childStartPositions[i];
+                Debug.Log($"[EnemyManager] Resetting enemy '{child.name}' to {pos}");
+                em.startPosition = pos;
+
                 em.GameRestart();
             }
             else
             {
                 // if not EnemyMovement, still try to reactivate
+                Debug.Log($"[EnemyManager] Reactivating non-enemy child '{child.name}' to {pos}");
                 child.gameObject.SetActive(true);
-                child.localPosition = childStartPositions[i];
+                child.localPosition = pos;
             }
             i++;
         }
