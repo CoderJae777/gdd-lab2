@@ -19,11 +19,15 @@ public class PlayerMovement : MonoBehaviour
     public float speed = 40;
     public float maxSpeed = 50;
     public float upSpeed = 20;
+    // smoothing for horizontal movement
+    public float acceleration = 10f; // how quickly velocity approaches target
+    public float deceleration = 10f; // how quickly velocity returns to 0 when no input
 
     // State Tracking
     private bool onGroundState = true;
     private bool faceRightState = true;
     private bool moving = false;
+    private int movementInput = 0; // -1 left, 0 none, 1 right
     private bool jumpedState = false;
 
     [System.NonSerialized] // do not show in inspector
@@ -79,10 +83,10 @@ public class PlayerMovement : MonoBehaviour
     // FixedUpdate may be called once per frame.
     void FixedUpdate()
     {
-        if (alive && moving)
-        {
-            Move(faceRightState == true ? 1 : -1);
-        }
+        if (!alive) return;
+
+        // always call Move with current input (0 when not moving)
+        Move(movementInput);
     }
 
     // ------------------------- //
@@ -130,21 +134,40 @@ public class PlayerMovement : MonoBehaviour
 
     void Move(int value)
     {
-        Vector2 movement = new Vector2(value, 0);
-        if (marioBody.linearVelocity.magnitude < maxSpeed)
-            marioBody.AddForce(movement * speed);
+        // set movement input (used elsewhere)
+        movementInput = value;
+
+        float targetX = value * maxSpeed;
+    float currentX = marioBody.linearVelocity.x;
+
+        if (value != 0)
+        {
+            // accelerate towards target speed
+            float newX = Mathf.Lerp(currentX, targetX, acceleration * Time.fixedDeltaTime);
+            marioBody.linearVelocity = new Vector2(newX, marioBody.linearVelocity.y);
+        }
+        else
+        {
+            // decelerate towards zero
+            float newX = Mathf.Lerp(currentX, 0f, deceleration * Time.fixedDeltaTime);
+            marioBody.linearVelocity = new Vector2(newX, marioBody.linearVelocity.y);
+            // mark not moving when near zero
+            if (Mathf.Abs(newX) < 0.01f) moving = false;
+        }
     }
 
     public void MoveCheck(int value)
     {
         if (value == 0)
-            moving = false;
-        else
         {
-            moving = true;
-            FlipMarioSprite(value);
-            Move(value);
+            moving = false;
+            movementInput = 0;
+            return;
         }
+
+        moving = true;
+        FlipMarioSprite(value);
+        movementInput = value;
     }
 
     public void Jump()
