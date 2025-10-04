@@ -38,15 +38,11 @@ public class PlayerMovement : MonoBehaviour
 
     // UI Objects
     public Transform gameCamera;
-    public GameObject gameOverCanvas;
-    public TextMeshProUGUI finalScoreText;
-    public TextMeshProUGUI scoreText;
 
     // Other parameters
     public AudioClip marioDeath;
     public float deathImpulse = 15;
     public GameObject enemies; // to reset Goombas
-    public JumpOverGoomba jumpOverGoomba; // to reset score
     public PlayerInput playerInput; // to reset input actions
     private InputAction jumpHoldAction;
     private InputAction moveAction;
@@ -203,14 +199,14 @@ public class PlayerMovement : MonoBehaviour
         marioBody.AddForce(Vector2.up * deathImpulse, ForceMode2D.Impulse);
     }
 
-    public void GameOverScene()
-    {
-        // stop time
-        Time.timeScale = 0.0f;
-        // set gameover scene
-        gameOverCanvas.SetActive(true);
-        finalScoreText.text = scoreText.text;
-    }
+    // public void GameOverScene()
+    // {
+    //     // stop time
+    //     Time.timeScale = 0.0f;
+    //     // set gameover scene
+    //     gameOverCanvas.SetActive(true);
+    //     finalScoreText.text = scoreText.text;
+    // }
 
     // Triggeres when Mario collides with another object
     void OnCollisionEnter2D(Collision2D col)
@@ -239,17 +235,17 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    public void RestartButtonCallback(int input)
-    {
-        // Debug.Log("Restart!");
-        // reset everything
-        ResetGame();
-        gameOverCanvas.SetActive(false);
-        // resume time
-        Time.timeScale = 1.0f;
-    }
+    // public void RestartButtonCallback(int input)
+    // {
+    //     // Debug.Log("Restart!");
+    //     // reset everything
+    //     ResetGame();
+    //     gameOverCanvas.SetActive(false);
+    //     // resume time
+    //     Time.timeScale = 1.0f;
+    // }
 
-    private void ResetGame()
+    public void GameRestart()
     {
         // reset position
         // transform.position = new Vector2(-3.259f, -2.45551f, -0.03384f);
@@ -258,31 +254,31 @@ public class PlayerMovement : MonoBehaviour
         // reset sprite direction
         faceRightState = true;
         marioSprite.flipX = false;
-        // reset score
-        scoreText.text = "Score: 0";
 
-        jumpOverGoomba.ResetScore();
-        // reset Goomba
-        foreach (Transform eachChild in enemies.transform)
-        {
-            eachChild.localPosition = eachChild.GetComponent<EnemyMovement>().startPosition;
-        }
+        // Remove this for lab3
+        // jumpOverGoomba.ResetScore();
 
-        // reset question boxes
-        foreach (QuestionBox qb in FindObjectsByType<QuestionBox>(FindObjectsSortMode.None))
-        {
-            qb.ResetBox();
-        }
-
-        // reset bricks
-        foreach (Brick b in FindObjectsByType<Brick>(FindObjectsSortMode.None))
-        {
-            b.ResetBrick();
-        }
         marioAnimator.SetTrigger("gameRestart");
         alive = true;
 
         gameCamera.position = new Vector3(0, 0, -10);
+    }
+
+    public void GameOverScene()
+    {
+        var gmObj = GameObject.FindGameObjectWithTag("Manager");
+        if (gmObj != null)
+        {
+            var gm = gmObj.GetComponent<GameManager>();
+            if (gm != null)
+            {
+                gm.GameOver(); // freezes time + shows canvas
+            }
+        }
+        else
+        {
+            Debug.LogError("[GameOverScene] Manager not found in scene!");
+        }
     }
 }
 

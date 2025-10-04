@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class EnemyMovement : MonoBehaviour
 {
-
     private float originalX;
     private float maxOffset = 5.0f;
     private float enemyPatroltime = 2.0f;
@@ -22,10 +21,12 @@ public class EnemyMovement : MonoBehaviour
         originalX = transform.position.x;
         ComputeVelocity();
     }
+
     void ComputeVelocity()
     {
         velocity = new Vector2((moveRight) * maxOffset / enemyPatroltime, 0);
     }
+
     void Movegoomba()
     {
         enemyBody.MovePosition(enemyBody.position + velocity * Time.fixedDeltaTime);
@@ -34,7 +35,7 @@ public class EnemyMovement : MonoBehaviour
     void FixedUpdate()
     {
         if (Mathf.Abs(enemyBody.position.x - originalX) < maxOffset)
-        {// move goomba
+        { // move goomba
             Movegoomba();
         }
         else
@@ -51,4 +52,11 @@ public class EnemyMovement : MonoBehaviour
         Debug.Log(other.gameObject.name);
     }
 
+    public void GameRestart()
+    {
+        transform.localPosition = startPosition;
+        originalX = transform.position.x;
+        moveRight = -1;
+        ComputeVelocity();
+    }
 }

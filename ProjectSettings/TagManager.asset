@@ -8,6 +8,7 @@ TagManager:
   - Enemy
   - Obstacles
   - QuestionBox
+  - Manager
   layers:
   - Default
   - TransparentFX
