@@ -18,6 +18,26 @@ public class QuestionBox : MonoBehaviour
     {
         sr = GetComponent<SpriteRenderer>();
         originalPos = transform.localPosition;
+        // Auto-subscribe to GameManager restart event so boxes reset automatically
+        var gmObj = GameObject.FindGameObjectWithTag("Manager");
+        if (gmObj != null)
+        {
+            var gm = gmObj.GetComponent<GameManager>();
+            if (gm != null)
+                gm.gameRestart.AddListener(ResetBox);
+        }
+    }
+
+    void OnDestroy()
+    {
+        // Unsubscribe from GameManager event when destroyed
+        var gmObj = GameObject.FindGameObjectWithTag("Manager");
+        if (gmObj != null)
+        {
+            var gm = gmObj.GetComponent<GameManager>();
+            if (gm != null)
+                gm.gameRestart.RemoveListener(ResetBox);
+        }
     }
 
     public void Bounce()
@@ -77,6 +97,7 @@ public class QuestionBox : MonoBehaviour
     public void ResetBox()
     {
         used = false;
+
         transform.localPosition = originalPos;
 
         if (sr != null && usedSprite != null)
@@ -91,7 +112,7 @@ public class QuestionBox : MonoBehaviour
             boxAnimator.ResetTrigger("Hit");
 
             // Force back to Idle
-            boxAnimator.Play("Idle", 0, 0f);
+            boxAnimator.Play("idle", 0, 0f);
         }
     }
 

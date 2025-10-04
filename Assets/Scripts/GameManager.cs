@@ -55,6 +55,28 @@ public class GameManager : MonoBehaviour
         // reset score
         score = 0;
         SetScore(score);
+        // Reset question boxes so their animator/sprite returns to Idle
+        try
+        {
+            var boxes = GameObject.FindObjectsByType<QuestionBox>(FindObjectsSortMode.None);
+            foreach (var box in boxes)
+            {
+                if (box != null)
+                {
+                    try
+                    {
+                        box.ResetBox();
+                    }
+                    catch (System.Exception) { }
+                }
+            }
+        }
+        catch (System.Exception ex)
+        {
+            Debug.LogWarning(
+                "GameManager.GameRestart: failed to reset question boxes: " + ex.Message
+            );
+        }
         gameRestart.Invoke();
         Time.timeScale = 1.0f;
     }
