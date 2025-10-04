@@ -39,7 +39,29 @@ public class Coin : MonoBehaviour
         {
             transform.position -= Vector3.up * speed * Time.deltaTime;
             if (transform.position.y <= startPos.y)
-                Destroy(gameObject); // disappears back into box
+                {
+                    // before destroying, award score to player
+                    try
+                    {
+                        var gm = GameObject.FindGameObjectWithTag("Manager");
+                        if (gm != null)
+                        {
+                            var gmc = gm.GetComponent<GameManager>();
+                            if (gmc != null)
+                                gmc.IncreaseScore(1);
+                            else
+                            {
+                                // fallback: try find by type
+                                var gmByType = GameObject.FindAnyObjectByType<GameManager>();
+                                if (gmByType != null)
+                                    gmByType.IncreaseScore(1);
+                            }
+                        }
+                    }
+                    catch (System.Exception) { }
+
+                    Destroy(gameObject); // disappears back into box
+                }
         }
     }
 }
