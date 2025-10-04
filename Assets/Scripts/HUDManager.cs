@@ -108,36 +108,40 @@ public class HUDManager : MonoBehaviour
 
         // Determine authoritative score from GameManager if available
         int authoritativeScore = lastScore;
-            GameManager gm = null;
-            // First try: find by tag 'Manager'
-            try
+        GameManager gm = null;
+        // First try: find by tag 'Manager'
+        try
+        {
+            var gmObj = GameObject.FindWithTag("Manager");
+            if (gmObj != null)
             {
-                var gmObj = GameObject.FindWithTag("Manager");
-                if (gmObj != null)
-                {
-                    gm = gmObj.GetComponent<GameManager>();
-                    Debug.Log("[HUDManager] Found GameManager by tag 'Manager'.");
-                }
+                gm = gmObj.GetComponent<GameManager>();
+                Debug.Log("[HUDManager] Found GameManager by tag 'Manager'.");
             }
-            catch (System.Exception) { }
+        }
+        catch (System.Exception) { }
 
-            // Fallback: find by type if tag lookup failed
-            if (gm == null)
-            {
-                gm = GameObject.FindAnyObjectByType<GameManager>();
-                if (gm != null)
-                    Debug.Log("[HUDManager] Found GameManager by type fallback.");
-            }
-
+        // Fallback: find by type if tag lookup failed
+        if (gm == null)
+        {
+            gm = GameObject.FindAnyObjectByType<GameManager>();
             if (gm != null)
-            {
-                authoritativeScore = gm.GetScore();
-                Debug.Log($"[HUDManager] Fetched authoritative score from GameManager: {authoritativeScore}");
-            }
-            else
-            {
-                Debug.LogWarning("[HUDManager] GameManager not found; using lastScore fallback: " + lastScore);
-            }
+                Debug.Log("[HUDManager] Found GameManager by type fallback.");
+        }
+
+        if (gm != null)
+        {
+            authoritativeScore = gm.GetScore();
+            Debug.Log(
+                $"[HUDManager] Fetched authoritative score from GameManager: {authoritativeScore}"
+            );
+        }
+        else
+        {
+            Debug.LogWarning(
+                "[HUDManager] GameManager not found; using lastScore fallback: " + lastScore
+            );
+        }
 
         // show final score text (black/bigger) and set value
         if (finalScoreText != null)

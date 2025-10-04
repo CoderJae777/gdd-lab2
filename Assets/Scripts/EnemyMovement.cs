@@ -62,5 +62,38 @@ public class EnemyMovement : MonoBehaviour
         originalX = transform.position.x;
         moveRight = -1;
         ComputeVelocity();
+        // Ensure this component is enabled so movement resumes
+        this.enabled = true;
+
+        // restore visual scale (in case squash animation scaled it)
+        Transform visual = transform.Find("Visual");
+        if (visual == null)
+        {
+            // fallback: first child with a SpriteRenderer
+            var sr = GetComponentInChildren<SpriteRenderer>();
+            if (sr != null)
+                visual = sr.transform;
+        }
+        if (visual != null)
+        {
+            visual.localScale = Vector3.one;
+            // reset animator state if present
+            var anim = visual.GetComponent<Animator>();
+            if (anim != null)
+            {
+                // return animator to its default state
+                anim.Rebind();
+                anim.Update(0f);
+            }
+        }
+
+        // re-enable colliders and physics
+        var colliders = GetComponentsInChildren<Collider2D>();
+        foreach (var c in colliders)
+            c.enabled = true;
+
+        var rb = GetComponent<Rigidbody2D>();
+        if (rb != null)
+            rb.simulated = true;
     }
 }

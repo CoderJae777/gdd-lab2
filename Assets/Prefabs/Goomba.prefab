@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3487259699520310858}
   - component: {fileID: 1128747434237781152}
   - component: {fileID: 4286591458458190531}
+  - component: {fileID: 3263530968939440258}
   m_Layer: 6
   m_Name: Goomba
   m_TagString: Enemy
@@ -176,3 +177,25 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1.0625}
   m_EdgeRadius: 0
+--- !u!95 &3263530968939440258
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7281048126628957058}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 03876df56eba6d54494cad6cb93d1b66, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

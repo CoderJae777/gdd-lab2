@@ -9,6 +9,9 @@ public class JumpOverGoomba : MonoBehaviour
 
     public float bounceForce = 10f;
 
+    // fallback duration (seconds) to wait for squash animation if clip length not inferred
+    public float squashDuration = 0.5f;
+
     void Start()
     {
         marioBody = GetComponent<Rigidbody2D>();
@@ -73,12 +76,56 @@ public class JumpOverGoomba : MonoBehaviour
 
     IEnumerator SquishEnemy(GameObject enemy)
     {
-        Animator anim = enemy.GetComponent<Animator>();
+        // Stop movement and collisions first
+        var enemyMovement = enemy.GetComponent<EnemyMovement>();
+        if (enemyMovement != null)
+            enemyMovement.enabled = false;
+
+        var colliders = enemy.GetComponentsInChildren<Collider2D>();
+        foreach (var c in colliders)
+            c.enabled = false;
+
+        var rb = enemy.GetComponent<Rigidbody2D>();
+        if (rb != null)
+        {
+            rb.linearVelocity = Vector2.zero;
+            rb.simulated = false;
+        }
+
+        // Try to find an Animator on the visual child
+        Animator anim = enemy.GetComponentInChildren<Animator>();
+        float wait = 0.5f; // default fallback
         if (anim != null)
         {
             anim.SetTrigger("Squish");
-            yield return new WaitForSeconds(0.2f);
+
+            // try to infer clip length from animator controller (look for squash/die clip)
+            var controller = anim.runtimeAnimatorController;
+            if (controller != null)
+            {
+                foreach (var clip in controller.animationClips)
+                {
+                    var name = clip.name.ToLower();
+                    if (
+                        name.Contains("squash")
+                        || name.Contains("squased")
+                        || name.Contains("die")
+                        || name.Contains("death")
+                    )
+                    {
+                        wait = clip.length;
+                        break;
+                    }
+                }
+            }
+            // if no clip matched, use public fallback
+            if (wait <= 0f)
+                wait = squashDuration;
         }
+
+        yield return new WaitForSeconds(wait);
+
+        // Deactivate (or destroy) the enemy after animation
         enemy.SetActive(false);
     }
 }

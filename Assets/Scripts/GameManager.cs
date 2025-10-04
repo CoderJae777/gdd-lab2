@@ -69,7 +69,25 @@ public class GameManager : MonoBehaviour
     public void SetScore(int score)
     {
         Debug.Log($"[GameManager] SetScore invoking scoreChange with {score}");
-        scoreChange.Invoke(score);
+        // Invoke event for any listeners
+        if (scoreChange != null)
+        {
+            try
+            {
+                scoreChange.Invoke(score);
+            }
+            catch (System.Exception ex)
+            {
+                Debug.LogWarning("[GameManager] Exception invoking scoreChange: " + ex.Message);
+            }
+        }
+
+        // Fallback: if HUDManager didn't subscribe for any reason, update it directly so the in-game score shows
+        var hud = GameObject.FindAnyObjectByType<HUDManager>();
+        if (hud != null)
+        {
+            hud.SetScore(score);
+        }
     }
 
     // Return the authoritative current score
