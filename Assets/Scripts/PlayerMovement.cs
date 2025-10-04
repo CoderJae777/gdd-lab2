@@ -40,7 +40,8 @@ public class PlayerMovement : MonoBehaviour
     public Transform gameCamera;
 
     // Other parameters
-    public AudioClip marioDeath;
+    // public AudioClip marioDeath;
+    public AudioSource marioDeathAudio;
     public float deathImpulse = 15;
     public GameObject enemies; // to reset Goombas
     public PlayerInput playerInput; // to reset input actions
@@ -226,7 +227,7 @@ public class PlayerMovement : MonoBehaviour
             // Debug.Log("Player collided with enemy!");
 
             marioAnimator.Play("mario-die");
-            marioAudio.PlayOneShot(marioDeath);
+            marioDeathAudio.Play();
             alive = false;
 
             // Time.timeScale = 0.0f;
