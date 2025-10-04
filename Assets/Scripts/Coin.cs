@@ -1,7 +1,7 @@
 using UnityEngine;
 
 public class Coin : MonoBehaviour
-{   
+{
     // Coin Settings
     public float riseHeight = 2f;
     public float speed = 4f;

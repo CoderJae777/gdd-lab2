@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using TMPro;
+using UnityEngine;
 
 public class JumpOverGoomba : MonoBehaviour
 {
@@ -16,18 +16,12 @@ public class JumpOverGoomba : MonoBehaviour
     public Vector3 boxSize;
     public float maxDistance;
     public LayerMask layerMask;
-    // Start is called before the first frame update
-    void Start()
-    {
 
-    }
+    // Start is called before the first frame update
+    void Start() { }
 
     // Update is called once per frame
-    void Update()
-    {
-
-
-    }
+    void Update() { }
 
     void FixedUpdate()
     {
@@ -53,7 +47,8 @@ public class JumpOverGoomba : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D col)
     {
-        if (col.gameObject.CompareTag("Ground")) onGroundState = true;
+        if (col.gameObject.CompareTag("Ground"))
+            onGroundState = true;
     }
 
     // helper
@@ -62,6 +57,7 @@ public class JumpOverGoomba : MonoBehaviour
         Gizmos.color = Color.yellow;
         Gizmos.DrawCube(transform.position - transform.up * maxDistance, boxSize);
     }
+
     public void ResetScore()
     {
         score = 0;
@@ -69,10 +65,11 @@ public class JumpOverGoomba : MonoBehaviour
         scoreText.text = "Score: 0";
     }
 
-
     private bool onGroundCheck()
     {
-        if (Physics2D.BoxCast(transform.position, boxSize, 0, -transform.up, maxDistance, layerMask))
+        if (
+            Physics2D.BoxCast(transform.position, boxSize, 0, -transform.up, maxDistance, layerMask)
+        )
         {
             // Debug.Log("on ground");
             return true;

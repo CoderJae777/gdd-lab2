@@ -2,15 +2,15 @@ using UnityEngine;
 
 public class QuestionBox : MonoBehaviour
 {
-    public Animator boxAnimator;      
-    public Sprite usedSprite;        
-    public GameObject coinPrefab;   
+    public Animator boxAnimator;
+    public Sprite usedSprite;
+    public GameObject coinPrefab;
 
     private bool used = false;
     private SpriteRenderer sr;
 
-    public float bounceHeight = 0.2f;   
-    public float bounceSpeed = 5f;      
+    public float bounceHeight = 0.2f;
+    public float bounceSpeed = 5f;
 
     private Vector3 originalPos;
 
@@ -18,9 +18,8 @@ public class QuestionBox : MonoBehaviour
     {
         sr = GetComponent<SpriteRenderer>();
         originalPos = transform.localPosition;
-
-
     }
+
     public void Bounce()
     {
         StopAllCoroutines();
@@ -35,7 +34,10 @@ public class QuestionBox : MonoBehaviour
         while (Vector3.Distance(transform.localPosition, targetPos) > 0.01f)
         {
             transform.localPosition = Vector3.MoveTowards(
-                transform.localPosition, targetPos, bounceSpeed * Time.deltaTime);
+                transform.localPosition,
+                targetPos,
+                bounceSpeed * Time.deltaTime
+            );
             yield return null;
         }
 
@@ -43,7 +45,10 @@ public class QuestionBox : MonoBehaviour
         while (Vector3.Distance(transform.localPosition, originalPos) > 0.01f)
         {
             transform.localPosition = Vector3.MoveTowards(
-                transform.localPosition, originalPos, bounceSpeed * Time.deltaTime);
+                transform.localPosition,
+                originalPos,
+                bounceSpeed * Time.deltaTime
+            );
             yield return null;
         }
 
@@ -52,7 +57,8 @@ public class QuestionBox : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D col)
     {
-        if (used) return;
+        if (used)
+            return;
 
         if (col.gameObject.CompareTag("Player"))
         {
@@ -67,6 +73,7 @@ public class QuestionBox : MonoBehaviour
             }
         }
     }
+
     public void ResetBox()
     {
         used = false;
@@ -88,10 +95,8 @@ public class QuestionBox : MonoBehaviour
         }
     }
 
-
     void ActivateBox()
     {
-
         used = true;
 
         Bounce();
@@ -109,8 +114,5 @@ public class QuestionBox : MonoBehaviour
             Vector3 spawnPos = transform.position + Vector3.up * 1f;
             Instantiate(coinPrefab, spawnPos, Quaternion.identity);
         }
-
-
-
     }
 }

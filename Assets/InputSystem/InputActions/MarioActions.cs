@@ -72,7 +72,7 @@ using UnityEngine.InputSystem.Utilities;
 /// }
 /// </code>
 /// </example>
-public partial class @MarioActions : IInputActionCollection2, IDisposable
+public partial class @MarioActions: IInputActionCollection2, IDisposable
 {
     /// <summary>
     /// Provides access to the underlying asset instance.
@@ -90,12 +90,12 @@ public partial class @MarioActions : IInputActionCollection2, IDisposable
     ""maps"": [
         {
             ""name"": ""gameplay"",
-            ""id"": ""3533de6e-39c8-43d2-abd6-94e9969a021b"",
+            ""id"": ""ec4157b3-57e0-4b88-bc64-d9bc1be7825a"",
             ""actions"": [
                 {
                     ""name"": ""move"",
                     ""type"": ""Value"",
-                    ""id"": ""de540d4e-759e-490b-a3d7-a0dc5c65b28a"",
+                    ""id"": ""320b04fb-dc6c-495d-b21f-a9bb044d051a"",
                     ""expectedControlType"": ""Axis"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -104,7 +104,7 @@ public partial class @MarioActions : IInputActionCollection2, IDisposable
                 {
                     ""name"": ""jump"",
                     ""type"": ""Button"",
-                    ""id"": ""73e00322-b341-4139-ae01-5b40665da090"",
+                    ""id"": ""1f2ce04d-5406-45bd-94ae-daeff3fc240c"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
@@ -113,17 +113,57 @@ public partial class @MarioActions : IInputActionCollection2, IDisposable
                 {
                     ""name"": ""jumphold"",
                     ""type"": ""Button"",
-                    ""id"": ""ab453683-a1dd-4831-8af9-67a7b397754d"",
+                    ""id"": ""437fb87b-1fc7-4aeb-a997-474235d596de"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""click"",
+                    ""type"": ""Button"",
+                    ""id"": ""dc44cdd8-1cc0-498f-a052-7ec29b45cd3d"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""point"",
+                    ""type"": ""Value"",
+                    ""id"": ""a6b49ed3-f3d9-4fea-a522-f119190684cf"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
                 {
+                    ""name"": """",
+                    ""id"": ""7369fb8a-8626-4157-8199-ff3449bf15a9"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard"",
+                    ""action"": ""jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""00d6a11f-5435-4712-8a3d-447ac1127512"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": ""Hold(duration=0.3)"",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard"",
+                    ""action"": ""jumphold"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
                     ""name"": ""1D Axis"",
-                    ""id"": ""613fd4c6-f0e2-48a3-bd07-e79c68bde6b0"",
+                    ""id"": ""6d2fe463-d9bf-4382-b371-daf41947253e"",
                     ""path"": ""1DAxis"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -133,8 +173,8 @@ public partial class @MarioActions : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": ""Negative"",
-                    ""id"": ""9fdf5501-507d-4ef3-9108-225ba25bd3d5"",
+                    ""name"": ""negative"",
+                    ""id"": ""21b5c810-c3bc-469a-ace1-361a37c887dd"",
                     ""path"": ""<Keyboard>/a"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -145,7 +185,7 @@ public partial class @MarioActions : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""positive"",
-                    ""id"": ""21b91b79-27b6-4df1-84f5-10887ce85d25"",
+                    ""id"": ""45be0a75-5b04-42f1-acf9-f9c5389673bb"",
                     ""path"": ""<Keyboard>/d"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -156,25 +196,47 @@ public partial class @MarioActions : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""845725d8-e171-4d7d-b25e-9dc975c5a147"",
-                    ""path"": ""<Keyboard>/space"",
-                    ""interactions"": ""Press"",
+                    ""id"": ""165552ce-6ad1-4771-be98-ccf9d45d1670"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": "";Keyboard"",
-                    ""action"": ""jump"",
+                    ""groups"": "";Mouse"",
+                    ""action"": ""click"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": """",
-                    ""id"": ""34b30088-5039-4bd1-aac8-6103d035601e"",
-                    ""path"": ""<Keyboard>/space"",
-                    ""interactions"": ""Hold(duration=0.3)"",
+                    ""name"": ""One Modifier"",
+                    ""id"": ""26b9c0a7-ca4c-45f5-84dd-2e7545290553"",
+                    ""path"": ""OneModifier"",
+                    ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": "";Keyboard"",
-                    ""action"": ""jumphold"",
-                    ""isComposite"": false,
+                    ""groups"": """",
+                    ""action"": ""point"",
+                    ""isComposite"": true,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""modifier"",
+                    ""id"": ""ef2c946c-36aa-45d1-9203-a5a9f1faa015"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Mouse"",
+                    ""action"": ""point"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""binding"",
+                    ""id"": ""e8b3573d-61ce-4648-ae60-da2580771dff"",
+                    ""path"": ""<Mouse>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Mouse"",
+                    ""action"": ""point"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         }
@@ -183,7 +245,24 @@ public partial class @MarioActions : IInputActionCollection2, IDisposable
         {
             ""name"": ""Keyboard"",
             ""bindingGroup"": ""Keyboard"",
-            ""devices"": []
+            ""devices"": [
+                {
+                    ""devicePath"": ""<Keyboard>"",
+                    ""isOptional"": false,
+                    ""isOR"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""Mouse"",
+            ""bindingGroup"": ""Mouse"",
+            ""devices"": [
+                {
+                    ""devicePath"": ""<Mouse>"",
+                    ""isOptional"": false,
+                    ""isOR"": false
+                }
+            ]
         }
     ]
 }");
@@ -192,6 +271,8 @@ public partial class @MarioActions : IInputActionCollection2, IDisposable
         m_gameplay_move = m_gameplay.FindAction("move", throwIfNotFound: true);
         m_gameplay_jump = m_gameplay.FindAction("jump", throwIfNotFound: true);
         m_gameplay_jumphold = m_gameplay.FindAction("jumphold", throwIfNotFound: true);
+        m_gameplay_click = m_gameplay.FindAction("click", throwIfNotFound: true);
+        m_gameplay_point = m_gameplay.FindAction("point", throwIfNotFound: true);
     }
 
     ~@MarioActions()
@@ -275,6 +356,8 @@ public partial class @MarioActions : IInputActionCollection2, IDisposable
     private readonly InputAction m_gameplay_move;
     private readonly InputAction m_gameplay_jump;
     private readonly InputAction m_gameplay_jumphold;
+    private readonly InputAction m_gameplay_click;
+    private readonly InputAction m_gameplay_point;
     /// <summary>
     /// Provides access to input actions defined in input action map "gameplay".
     /// </summary>
@@ -298,6 +381,14 @@ public partial class @MarioActions : IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "gameplay/jumphold".
         /// </summary>
         public InputAction @jumphold => m_Wrapper.m_gameplay_jumphold;
+        /// <summary>
+        /// Provides access to the underlying input action "gameplay/click".
+        /// </summary>
+        public InputAction @click => m_Wrapper.m_gameplay_click;
+        /// <summary>
+        /// Provides access to the underlying input action "gameplay/point".
+        /// </summary>
+        public InputAction @point => m_Wrapper.m_gameplay_point;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -333,6 +424,12 @@ public partial class @MarioActions : IInputActionCollection2, IDisposable
             @jumphold.started += instance.OnJumphold;
             @jumphold.performed += instance.OnJumphold;
             @jumphold.canceled += instance.OnJumphold;
+            @click.started += instance.OnClick;
+            @click.performed += instance.OnClick;
+            @click.canceled += instance.OnClick;
+            @point.started += instance.OnPoint;
+            @point.performed += instance.OnPoint;
+            @point.canceled += instance.OnPoint;
         }
 
         /// <summary>
@@ -353,6 +450,12 @@ public partial class @MarioActions : IInputActionCollection2, IDisposable
             @jumphold.started -= instance.OnJumphold;
             @jumphold.performed -= instance.OnJumphold;
             @jumphold.canceled -= instance.OnJumphold;
+            @click.started -= instance.OnClick;
+            @click.performed -= instance.OnClick;
+            @click.canceled -= instance.OnClick;
+            @point.started -= instance.OnPoint;
+            @point.performed -= instance.OnPoint;
+            @point.canceled -= instance.OnPoint;
         }
 
         /// <summary>
@@ -399,6 +502,19 @@ public partial class @MarioActions : IInputActionCollection2, IDisposable
             return asset.controlSchemes[m_KeyboardSchemeIndex];
         }
     }
+    private int m_MouseSchemeIndex = -1;
+    /// <summary>
+    /// Provides access to the input control scheme.
+    /// </summary>
+    /// <seealso cref="UnityEngine.InputSystem.InputControlScheme" />
+    public InputControlScheme MouseScheme
+    {
+        get
+        {
+            if (m_MouseSchemeIndex == -1) m_MouseSchemeIndex = asset.FindControlSchemeIndex("Mouse");
+            return asset.controlSchemes[m_MouseSchemeIndex];
+        }
+    }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "gameplay" which allows adding and removing callbacks.
     /// </summary>
@@ -427,5 +543,19 @@ public partial class @MarioActions : IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnJumphold(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "click" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnClick(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "point" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnPoint(InputAction.CallbackContext context);
     }
 }

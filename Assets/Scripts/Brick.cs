@@ -1,29 +1,29 @@
 using UnityEngine;
 
 public class Brick : MonoBehaviour
-{   
-    [Header("Brick Settings")]      // For the inspector to show "Brick Settings", just some qol stuff
-    public bool hasCoin = false;    // true = spawns coin, false = just bounce
-    public GameObject coinPrefab;   // coin prefab reference
+{
+    [Header("Brick Settings")] // For the inspector to show "Brick Settings", just some qol stuff
+    public bool hasCoin = false; // true = spawns coin, false = just bounce
+    public GameObject coinPrefab; // coin prefab reference
 
     // Bounce Settings
-    [Header("Bounce Settings")]         // same qol stuff
-    public float bounceHeight = 0.2f;   // how high the brick moves
-    public float bounceSpeed = 5f;      // how fast the bounce happens
+    [Header("Bounce Settings")] // same qol stuff
+    public float bounceHeight = 0.2f; // how high the brick moves
+    public float bounceSpeed = 5f; // how fast the bounce happens
 
-    
-    private Vector3 originalPos;    // original local position of the brick
-    private bool used = false;      // brick state (used or not)
+    private Vector3 originalPos; // original local position of the brick
+    private bool used = false; // brick state (used or not)
 
     private void Start()
-    {   
-        originalPos = transform.localPosition;  //localPosition is measured relative to that parent, not world space.
+    {
+        originalPos = transform.localPosition; //localPosition is measured relative to that parent, not world space.
     }
 
     private void OnCollisionEnter2D(Collision2D col)
     {
         // If already used, ignore
-        if (used) return;
+        if (used)
+            return;
 
         // Only react if Mario hits from BELOW
         if (col.gameObject.CompareTag("Player"))
@@ -42,15 +42,16 @@ public class Brick : MonoBehaviour
     private void ActivateBrick()
     {
         // Mark as used only if it had a coin
-        if (hasCoin) used = true;
+        if (hasCoin)
+            used = true;
 
         // Start bounce animation (script-driven)
         StopAllCoroutines();
-        StartCoroutine(BounceRoutine());    // Begins the coroutine
+        StartCoroutine(BounceRoutine()); // Begins the coroutine
 
         // Why is this better than a normal function call?
         // bcause unity would try to execute all iterations in one frame i.e. the brick will teleport up
-        // and then down again in one frame. 
+        // and then down again in one frame.
         // Coroutine allows pausing execution and resuming in the next frame.
 
         // If it has a coin, spawn it
@@ -59,7 +60,6 @@ public class Brick : MonoBehaviour
             Vector3 spawnPos = transform.position + Vector3.up * 0.5f;
             GameObject coin = Instantiate(coinPrefab, spawnPos, Quaternion.identity);
             Debug.Log("Coin spawned at: " + spawnPos);
-
         }
     }
 
@@ -71,7 +71,10 @@ public class Brick : MonoBehaviour
         while (Vector3.Distance(transform.localPosition, targetPos) > 0.01f)
         {
             transform.localPosition = Vector3.MoveTowards(
-                transform.localPosition, targetPos, bounceSpeed * Time.deltaTime);
+                transform.localPosition,
+                targetPos,
+                bounceSpeed * Time.deltaTime
+            );
             yield return null;
         }
 
@@ -79,12 +82,16 @@ public class Brick : MonoBehaviour
         while (Vector3.Distance(transform.localPosition, originalPos) > 0.01f)
         {
             transform.localPosition = Vector3.MoveTowards(
-                transform.localPosition, originalPos, bounceSpeed * Time.deltaTime);
+                transform.localPosition,
+                originalPos,
+                bounceSpeed * Time.deltaTime
+            );
             yield return null;
         }
 
         transform.localPosition = originalPos; // snap back
     }
+
     public void ResetBrick()
     {
         used = false;
@@ -92,5 +99,4 @@ public class Brick : MonoBehaviour
         // If you want to reset sprite, do it here
         // sr.sprite = defaultBrickSprite;
     }
-
 }
