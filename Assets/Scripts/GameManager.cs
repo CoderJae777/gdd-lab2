@@ -33,9 +33,12 @@ public class GameManager : MonoBehaviour
         var hudObj = GameObject.FindAnyObjectByType<HUDManager>();
         if (hudObj != null)
         {
-            Debug.Log("[GameManager] HUDManager found; subscribing SetScore to scoreChange.");
+            Debug.Log("[GameManager] HUDManager found; subscribing HUD handlers.");
             // subscribe HUD to scoreChange event
             scoreChange.AddListener(hudObj.SetScore);
+            // subscribe HUD to game over and restart events
+            gameOver.AddListener(hudObj.GameOver);
+            gameRestart.AddListener(hudObj.GameStart);
         }
         else
         {
@@ -67,6 +70,12 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log($"[GameManager] SetScore invoking scoreChange with {score}");
         scoreChange.Invoke(score);
+    }
+
+    // Return the authoritative current score
+    public int GetScore()
+    {
+        return score;
     }
 
     public void GameOver()
