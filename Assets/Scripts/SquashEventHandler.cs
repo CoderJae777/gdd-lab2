@@ -1,11 +1,13 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 // Attach this to the Visual child (Animator) and add an Animation Event
 // calling OnSquashFinished at the last frame of the squashed clip.
 public class SquashEventHandler : MonoBehaviour
 {
-    [Tooltip("Seconds to hold flattened pose before deactivation (optional)")]
     public float holdDuration = 0.0f;
+
+    public AudioSource deathAudio;
 
     // This is called from the Animation Event at the end of the squashed clip
     public void OnSquashFinished()
@@ -23,8 +25,16 @@ public class SquashEventHandler : MonoBehaviour
         if (anim != null)
         {
             // clear squish flag
-            try { anim.SetBool("squish", false); } catch { }
-            try { anim.ResetTrigger("Squish"); } catch { }
+            try
+            {
+                anim.SetBool("squish", false);
+            }
+            catch { }
+            try
+            {
+                anim.ResetTrigger("Squish");
+            }
+            catch { }
         }
 
         // Find the top-level enemy root (parent with EnemyMovement) and deactivate
@@ -44,6 +54,11 @@ public class SquashEventHandler : MonoBehaviour
             var rb = t.GetComponent<Rigidbody2D>();
             if (rb != null)
                 rb.simulated = true;
+
+            if (deathAudio != null)
+            {
+                deathAudio.PlayOneShot(deathAudio.clip);
+            }
 
             // deactivate the enemy root (or return to pool)
             t.gameObject.SetActive(false);
